@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { valideURLConvert } from '../utils/valideURLConvert'
 import { useNavigate } from 'react-router-dom'
@@ -18,7 +18,61 @@ const Home = () => {
   const subCategoryData = useSelector(state => state.product.allSubCategory)
   const [featuredProducts, setFeaturedProducts] = useState([])
   const [loadingProducts, setLoadingProducts] = useState(false)
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0)
   const navigate = useNavigate()
+
+  const heroSlides = useMemo(() => {
+    const defaultSlides = [
+      {
+        label: 'New arrivals',
+        title: 'Discover TechX’s premium tech marketplace.',
+        description: 'Shop the latest smartphones, laptops, and accessories from top brands across India.',
+        ctaText: 'Shop now',
+        secondaryText: 'Explore deals',
+        image: techHeroImage,
+        mobileImage: techHeroMobileImage
+      },
+      {
+        label: 'Gaming gear',
+        title: 'Build the ultimate gaming station.',
+        description: 'Find high-refresh monitors, RGB keyboards, headsets, and controllers designed for pro-level play.',
+        ctaText: 'Shop gaming',
+        secondaryText: 'Discover gaming',
+        image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1400&q=80',
+        mobileImage: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        label: 'Workspace essentials',
+        title: 'Upgrade your desktop setup for maximum productivity.',
+        description: 'Explore ergonomic chairs, monitors, docks, and accessories that keep work crisp and comfortable.',
+        ctaText: 'Shop workspace',
+        secondaryText: 'See workspace',
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=80',
+        mobileImage: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80'
+      },
+      {
+        label: 'Audio essentials',
+        title: 'Hear every detail with premium audio solutions.',
+        description: 'Discover earbuds, speakers, and sound systems built for music, movies, and immersive calls.',
+        ctaText: 'Shop audio',
+        secondaryText: 'Explore audio',
+        image: 'https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&w=1400&q=80',
+        mobileImage: 'https://images.unsplash.com/photo-1511376777868-611b54f68947?auto=format&fit=crop&w=900&q=80'
+      }
+    ]
+
+    return defaultSlides
+  }, [])
+
+  const activeHeroSlide = heroSlides[currentHeroSlide] || heroSlides[0]
+
+  useEffect(() => {
+    if (!heroSlides.length) return
+    const interval = setInterval(() => {
+      setCurrentHeroSlide(prev => (prev + 1) % heroSlides.length)
+    }, 5000)
+    return () => clearInterval(interval)
+  }, [heroSlides.length])
 
   const fetchFeaturedProducts = async () => {
     try {
@@ -64,23 +118,49 @@ const Home = () => {
       <div className='mx-auto max-w-7xl px-3 py-4 md:px-5 lg:px-6'>
           <div className='relative overflow-hidden rounded-[32px] border border-slate-200/80 bg-slate-950 shadow-soft'>
               <img
-                src={techHeroImage}
+                src={activeHeroSlide.image}
                 className='hidden h-[440px] w-full object-cover lg:block'
                 alt='tech hero banner'
               />
               <img
-                src={techHeroMobileImage}
+                src={activeHeroSlide.mobileImage}
                 className='h-[280px] w-full object-cover lg:hidden'
                 alt='tech hero banner'
               />
               <div className='absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/20' />
               <div className='relative flex min-h-[320px] flex-col justify-center px-6 py-10 md:px-10 lg:max-w-3xl lg:px-14 lg:py-14'>
-                <p className='mb-3 inline-flex w-fit rounded-full border border-cyan-400/30 bg-cyan-500/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-cyan-200 backdrop-blur'>New arrivals</p>
-                <h2 className='text-3xl font-semibold leading-tight text-white md:text-5xl'>Discover TechX’s premium tech marketplace.</h2>
-                <p className='mt-3 max-w-lg text-sm text-slate-200 md:text-base'>Shop the latest smartphones, laptops, and accessories from top brands across India.</p>
+                <p className='mb-3 inline-flex w-fit rounded-full border border-cyan-400/30 bg-cyan-500/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.3em] text-cyan-200 backdrop-blur'>
+                  {activeHeroSlide.label}
+                </p>
+                <h2 className='text-3xl font-semibold leading-tight text-white md:text-5xl'>
+                  {activeHeroSlide.title}
+                </h2>
+                <p className='mt-3 max-w-lg text-sm text-slate-200 md:text-base'>
+                  {activeHeroSlide.description}
+                </p>
                 <div className='mt-6 flex flex-wrap gap-3'>
-                  <button className='rounded-full bg-cyan-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-cyan-400'>Shop now</button>
-                  <button className='rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/20'>Explore deals</button>
+                  <button
+                    className='rounded-full bg-cyan-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-cyan-400'
+                    onClick={() => activeHeroSlide.categoryId && handleRedirectProductListpage(activeHeroSlide.categoryId, activeHeroSlide.categoryName)}
+                  >
+                    {activeHeroSlide.ctaText}
+                  </button>
+                  <button
+                    className='rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/20'
+                    onClick={() => activeHeroSlide.categoryId && handleRedirectProductListpage(activeHeroSlide.categoryId, activeHeroSlide.categoryName)}
+                  >
+                    {activeHeroSlide.secondaryText}
+                  </button>
+                </div>
+                <div className='mt-5 flex gap-2'>
+                  {heroSlides.map((slide, index) => (
+                    <button
+                      key={`${slide.label}-${index}`}
+                      onClick={() => setCurrentHeroSlide(index)}
+                      className={`h-2.5 w-2.5 rounded-full transition ${index === currentHeroSlide ? 'bg-white' : 'bg-white/40 hover:bg-white/70'}`}
+                      aria-label={`Go to ${slide.label}`}
+                    />
+                  ))}
                 </div>
               </div>
           </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { FaFacebook, FaInstagram, FaLinkedin } from 'react-icons/fa'
 import logo from '../assets/logo.svg'
 
@@ -23,17 +24,17 @@ const Footer = () => {
                 <div>
                     <p className='mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-white'>Shop</p>
                     <div className='flex flex-col gap-2 text-slate-400'>
-                        <a href='' className='transition hover:text-cyan-400'>Phones</a>
-                        <a href='' className='transition hover:text-cyan-400'>Laptops</a>
-                        <a href='' className='transition hover:text-cyan-400'>Accessories</a>
+                        <Link to='/deals' className='transition hover:text-cyan-400'>Deals</Link>
+                        <Link to='/' className='transition hover:text-cyan-400'>All Products</Link>
+                        <Link to='/about' className='transition hover:text-cyan-400'>About</Link>
                     </div>
                 </div>
                 <div>
                     <p className='mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-white'>Support</p>
                     <div className='flex flex-col gap-2 text-slate-400'>
-                        <a href='' className='transition hover:text-cyan-400'>Contact us</a>
-                        <a href='' className='transition hover:text-cyan-400'>Shipping</a>
-                        <a href='' className='transition hover:text-cyan-400'>Returns</a>
+                        <Link to='/contact' className='transition hover:text-cyan-400'>Contact us</Link>
+                        <Link to='/about' className='transition hover:text-cyan-400'>Company</Link>
+                        <Link to='/' className='transition hover:text-cyan-400'>Returns</Link>
                     </div>
                 </div>
             </div>

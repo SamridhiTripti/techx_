@@ -45,15 +45,22 @@ const Header = () => {
             {
                 !(isSearchPage && isMobile) && (
                     <div className='mx-auto flex h-20 max-w-7xl items-center justify-between px-3 md:px-5 lg:px-6'>
-                        <Link to={'/'} className='flex items-center gap-3'>
-                            <div className='relative h-10 w-10 overflow-hidden rounded-2xl bg-slate-950 text-white shadow-soft'>
-                                <img src={logo} alt='TechX' className='h-full w-full object-contain p-1' />
-                            </div>
-                            <div>
-                                <p className='text-lg font-semibold tracking-[0.24em] text-slate-900'>TechX</p>
-                                <p className='text-[11px] uppercase tracking-[0.3em] text-slate-500'>Gadget market</p>
-                            </div>
-                        </Link>
+                        <div className='flex items-center gap-6'>
+                          <Link to={'/'} className='flex items-center gap-3'>
+                              <div className='relative h-10 w-10 overflow-hidden rounded-2xl bg-slate-950 text-white shadow-soft'>
+                                  <img src={logo} alt='TechX' className='h-full w-full object-contain p-1' />
+                              </div>
+                              <div>
+                                  <p className='text-lg font-semibold tracking-[0.24em] text-slate-900'>TechX</p>
+                                  <p className='text-[11px] uppercase tracking-[0.3em] text-slate-500'>Gadget market</p>
+                              </div>
+                          </Link>
+                          <div className='hidden items-center gap-4 text-sm font-medium text-slate-700 lg:flex'>
+                            <Link to='/about' className='transition hover:text-cyan-600'>About</Link>
+                            <Link to='/deals' className='transition hover:text-cyan-600'>Deals</Link>
+                            <Link to='/contact' className='transition hover:text-cyan-600'>Contact</Link>
+                          </div>
+                        </div>
 
                         <div className='hidden flex-1 justify-center px-4 lg:flex'>
                             <Search />
