@@ -23,16 +23,18 @@ const GlobalProvider = ({children}) => {
 
     const fetchCartItem = async()=>{
         try {
+          if (!user?._id) {
+            dispatch(handleAddItemCart([]))
+            return
+          }
           const response = await Axios({
             ...SummaryApi.getCartItem
           })
           const { data : responseData } = response
     
           if(responseData.success){
-            dispatch(handleAddItemCart(responseData.data))
-            console.log(responseData)
+            dispatch(handleAddItemCart(responseData.data || []))
           }
-    
         } catch (error) {
           console.log(error)
         }
@@ -50,7 +52,6 @@ const GlobalProvider = ({children}) => {
           const { data : responseData } = response
 
           if(responseData.success){
-              // toast.success(responseData.message)
               fetchCartItem()
               return responseData
           }
@@ -79,20 +80,20 @@ const GlobalProvider = ({children}) => {
     }
 
     useEffect(()=>{
-      const qty = cartItem.reduce((preve,curr)=>{
-          return preve + curr.quantity
+      const list = Array.isArray(cartItem) ? cartItem : []
+      const qty = list.reduce((preve,curr)=>{
+          return preve + (curr?.quantity || 0)
       },0)
       setTotalQty(qty)
       
-      const tPrice = cartItem.reduce((preve,curr)=>{
-          const priceAfterDiscount = pricewithDiscount(curr?.productId?.price,curr?.productId?.discount)
-
-          return preve + (priceAfterDiscount * curr.quantity)
+      const tPrice = list.reduce((preve,curr)=>{
+          const priceAfterDiscount = pricewithDiscount(curr?.productId?.price, curr?.productId?.discount) || 0
+          return preve + (priceAfterDiscount * (curr?.quantity || 0))
       },0)
       setTotalPrice(tPrice)
 
-      const notDiscountPrice = cartItem.reduce((preve,curr)=>{
-        return preve + (curr?.productId?.price * curr.quantity)
+      const notDiscountPrice = list.reduce((preve,curr)=>{
+        return preve + ((curr?.productId?.price || 0) * (curr?.quantity || 0))
       },0)
       setNotDiscountTotalPrice(notDiscountPrice)
   },[cartItem])

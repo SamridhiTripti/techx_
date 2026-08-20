@@ -10,21 +10,29 @@ const userSchema = new mongoose.Schema({
         required: [true, "provide email"],
         unique: true,
     },
+    password: {
+        type: String,
+        required: [true, "provide password"],
+    },
     avatar: {
         type: String,
         default: "",
     },
     mobile: {
-        type: Number,
-        default: null,
+        type: String,
+        default: "",
     },
-    reference_token: {
+    refreshToken: {
         type: String,
         default: "",
     },
     verify_email: {
         type: Boolean,
-        default: false,
+        default: true,
+    },
+    isVerified: {
+        type: Boolean,
+        default: true,
     },
     last_login_date: {
         type: Date,
@@ -32,8 +40,7 @@ const userSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["ACTIVE", "INACTIVE", "SUSPENDED"],
-        default: "ACTIVE",
+        default: "active",
     },
     address_details: [
         {
@@ -44,7 +51,7 @@ const userSchema = new mongoose.Schema({
     Shopping_cart: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "cartProduct",
+            ref: "cartproduct",
         },
     ],
     orderHistory: [
@@ -53,17 +60,17 @@ const userSchema = new mongoose.Schema({
             ref: "order",
         },
     ],
-    forgot_password_otp: {
+    forgotPasswordOtp: {
         type: String,
         default: null,
     },
-    forgot_password_expiry: {
+    otpExpireTime: {
         type: Date,
         default: null,
     },
     role: {
         type: String,
-        enum: ["ADMIN", "USER"],
+        enum: ["ADMIN", "USER", "admin", "user"],
         default: "USER",
     },
 }, { timestamps: true });

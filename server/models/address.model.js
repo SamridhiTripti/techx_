@@ -23,6 +23,14 @@ const addressSchema = new mongoose.Schema({
     mobile : {
         type: Number,
         default : null
+    },
+    userId : {
+        type: String,
+        default : ""
+    },
+    status : {
+        type: Boolean,
+        default : true
     }
 }, { timestamps: true })
 

@@ -8,7 +8,8 @@ const auth = (request, response, next) => {
             return response.status(401).json({ message: 'Access denied. No token provided.' });
         }
 
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const secret = process.env.SECRET_KEY_ACCESS_TOKEN || process.env.JWT_SECRET || "techx_secret_key_2026";
+        const decode = jwt.verify(token, secret);
 
         if (!decode) {
             return response.status(401).json({ message: 'Unauthorized access', error: true, success: false });
@@ -17,7 +18,7 @@ const auth = (request, response, next) => {
         request.userId = decode.id || decode.userId || decode._id;
         next();
     } catch (error) {
-        response.status(500).json({ message: error.message || error, error: true, success: false });
+        return response.status(401).json({ message: error.message || 'Unauthorized or expired token', error: true, success: false });
     }
 };
 

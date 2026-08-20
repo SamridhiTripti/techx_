@@ -60,6 +60,7 @@ export async function updateCartItemQtyController(request, response) {
 
     if (qty < 1) {
       await CartProductModel.findOneAndDelete({ _id, userId })
+      await UserModel.findByIdAndUpdate(userId, { $pull: { Shopping_cart: _id } })
       return response.json({ success: true, error: false, message: 'Cart item removed successfully.' })
     }
 
@@ -92,6 +93,8 @@ export async function deleteCartItemController(request, response) {
     if (!deleted) {
       return response.status(404).json({ success: false, error: true, message: 'Cart item not found.' })
     }
+
+    await UserModel.findByIdAndUpdate(userId, { $pull: { Shopping_cart: _id } })
 
     return response.json({ success: true, error: false, message: 'Cart item removed successfully.' })
   } catch (error) {

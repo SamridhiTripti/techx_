@@ -3,12 +3,9 @@ import { useParams } from 'react-router-dom'
 import SummaryApi from '../common/SummaryApi'
 import Axios from '../utils/Axios'
 import AxiosToastError from '../utils/AxiosToastError'
-import { FaAngleRight,FaAngleLeft } from "react-icons/fa6";
+import { FaAngleRight, FaAngleLeft, FaTruckFast, FaShieldHalved, FaMicrochip, FaRotateLeft } from "react-icons/fa6";
 import { DisplayPriceInRupees } from '../utils/DisplayPriceInRupees'
 import Divider from '../components/Divider'
-import image1 from '../assets/minute_delivery.png'
-import image2 from '../assets/Best_Prices_Offers.png'
-import image3 from '../assets/Wide_Assortment.png'
 import { pricewithDiscount } from '../utils/PriceWithDiscount'
 import AddToCartButton from '../components/AddToCartButton'
 
@@ -164,38 +161,44 @@ const ProductDisplayPage = () => {
             }
 
             <h2 className='mt-5 text-lg font-semibold text-slate-900'>Why shop from TechX?</h2>
-            <div>
-                  <div className='my-4 flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-3'>
-                      <img
-                        src={image1}
-                        alt='superfast delivery'
-                        className='h-16 w-16 rounded-2xl object-contain'
-                      />
+            <div className='space-y-3 pt-2'>
+                  <div className='flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5 transition hover:bg-slate-50'>
+                      <div className='flex h-12 w-12 min-h-12 min-w-12 items-center justify-center rounded-2xl border border-cyan-200/80 bg-cyan-50 text-cyan-600 shadow-sm'>
+                          <FaTruckFast className='text-xl' />
+                      </div>
                       <div className='text-sm'>
-                        <div className='font-semibold text-slate-800'>Superfast Delivery</div>
-                        <p className='mt-1 text-slate-500'>Get your device delivered quickly from trusted fulfillment centers.</p>
+                        <div className='font-semibold text-slate-800'>Superfast & Insured Delivery</div>
+                        <p className='mt-0.5 text-xs leading-relaxed text-slate-500'>Specialized shockproof packaging & expedited transit from certified tech fulfillment hubs.</p>
                       </div>
                   </div>
-                  <div className='my-4 flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-3'>
-                      <img
-                        src={image2}
-                        alt='Best prices offers'
-                        className='h-16 w-16 rounded-2xl object-contain'
-                      />
+
+                  <div className='flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5 transition hover:bg-slate-50'>
+                      <div className='flex h-12 w-12 min-h-12 min-w-12 items-center justify-center rounded-2xl border border-emerald-200/80 bg-emerald-50 text-emerald-600 shadow-sm'>
+                          <FaShieldHalved className='text-xl' />
+                      </div>
                       <div className='text-sm'>
-                        <div className='font-semibold text-slate-800'>Best Prices & Offers</div>
-                        <p className='mt-1 text-slate-500'>Competitive pricing and exciting launch offers directly from top brands.</p>
+                        <div className='font-semibold text-slate-800'>100% Genuine & Official Warranty</div>
+                        <p className='mt-0.5 text-xs leading-relaxed text-slate-500'>Direct OEM verified devices with valid manufacturer warranties and authorized service support.</p>
                       </div>
                   </div>
-                  <div className='my-4 flex items-center gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-3'>
-                      <img
-                        src={image3}
-                        alt='Wide Assortment'
-                        className='h-16 w-16 rounded-2xl object-contain'
-                      />
+
+                  <div className='flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5 transition hover:bg-slate-50'>
+                      <div className='flex h-12 w-12 min-h-12 min-w-12 items-center justify-center rounded-2xl border border-indigo-200/80 bg-indigo-50 text-indigo-600 shadow-sm'>
+                          <FaMicrochip className='text-xl' />
+                      </div>
                       <div className='text-sm'>
-                        <div className='font-semibold text-slate-800'>Wide Assortment</div>
-                        <p className='mt-1 text-slate-500'>Choose from a curated range of premium laptops, phones, audio, and accessories.</p>
+                        <div className='font-semibold text-slate-800'>Curated Tech & Best Launch Offers</div>
+                        <p className='mt-0.5 text-xs leading-relaxed text-slate-500'>Curated range of laptops, flagship phones, audio gear, and tested gadgets at competitive prices.</p>
+                      </div>
+                  </div>
+
+                  <div className='flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5 transition hover:bg-slate-50'>
+                      <div className='flex h-12 w-12 min-h-12 min-w-12 items-center justify-center rounded-2xl border border-amber-200/80 bg-amber-50 text-amber-600 shadow-sm'>
+                          <FaRotateLeft className='text-xl' />
+                      </div>
+                      <div className='text-sm'>
+                        <div className='font-semibold text-slate-800'>7-Day Replacement Guarantee</div>
+                        <p className='mt-0.5 text-xs leading-relaxed text-slate-500'>Hassle-free replacement for verified hardware defects with 24/7 dedicated support.</p>
                       </div>
                   </div>
             </div>
